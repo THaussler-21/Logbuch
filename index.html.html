@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Logbuch</title>
+<style>
+:root{--bg:#f4f6f8;--card:#fff;--tx:#1a2330;--mu:#677385;--ac:#0f6fbd;--acs:#e1effa;--ok:#1b8a4b;--bad:#c23b3b;--bd:#d9dfe6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#11151a;--card:#1a2028;--tx:#e6ebf1;--mu:#93a0b1;--ac:#5aa9ec;--acs:#1d3043;--ok:#4cc17e;--bad:#ef7676;--bd:#2c3541}}
+:root[data-theme="dark"]{--bg:#11151a;--card:#1a2028;--tx:#e6ebf1;--mu:#93a0b1;--ac:#5aa9ec;--acs:#1d3043;--ok:#4cc17e;--bad:#ef7676;--bd:#2c3541}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:640px;margin:0 auto;padding:12px 12px 80px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--card);border-bottom:1px solid var(--bd);display:flex}
+nav button{flex:1;padding:12px 4px;border:0;background:none;color:var(--mu);font:inherit;font-size:14px;border-bottom:3px solid transparent}
+nav button.on{color:var(--ac);border-color:var(--ac);font-weight:600}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin:10px 0}
+h2{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--mu);margin:0 0 8px}
+label{display:block;font-size:13px;color:var(--mu);margin:8px 0 3px}
+input,select,textarea{width:100%;padding:10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg{display:flex;background:var(--card);border:1px solid var(--bd);border-radius:10px;overflow:hidden}
+.seg button{flex:1;padding:11px 4px;border:0;background:none;color:var(--tx);font:inherit;font-weight:600}
+.seg button.on{background:var(--ac);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--bd);border-radius:999px;padding:7px 12px;font-size:14px;background:var(--bg);user-select:none}
+.chip.on{background:var(--acs);border-color:var(--ac);color:var(--ac);font-weight:600}
+.row{border:1px solid var(--bd);border-radius:10px;padding:8px;margin:8px 0}
+.rn{display:flex;justify-content:space-between;font-weight:600}
+.rc{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.rc select{width:auto;flex:1;min-width:110px}
+.st{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--mu)}
+.st button,.x{width:34px;height:34px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font-size:18px}
+.x{border:0;background:none;color:var(--mu);width:auto}
+.ok{padding:8px 10px;border-radius:8px;border:1px solid;background:none;font:inherit;font-size:14px}
+.ok.y{color:var(--ok);border-color:var(--ok)}.ok.n{color:var(--bad);border-color:var(--bad)}
+.btn{display:block;width:100%;padding:13px;border:0;border-radius:10px;background:var(--ac);color:#fff;font:inherit;font-weight:600;margin-top:10px}
+.btn.s{background:var(--acs);color:var(--ac)}.btn.d{background:none;color:var(--bad);border:1px solid var(--bad)}
+.add{display:flex;gap:6px;margin-top:8px}.add button{width:auto;margin:0;padding:0 16px}
+.tag{display:inline-block;font-size:12px;background:var(--bg);border:1px solid var(--bd);border-radius:6px;padding:2px 6px;margin:2px 2px 0 0}
+.mu{color:var(--mu);font-size:13px}
+.kp{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.kp div{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px}
+.kp b{display:block;font-size:24px}
+.bar{display:flex;align-items:center;gap:8px;font-size:13px;margin:4px 0}
+.bar span:first-child{width:42%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar i{display:block;height:14px;background:var(--ac);border-radius:4px;min-width:2px}
+.bar em{font-style:normal;color:var(--mu)}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:6px 4px;text-align:right;border-bottom:1px solid var(--bd);white-space:nowrap}th:first-child,td:first-child{text-align:left}
+th{color:var(--mu);font-weight:600;font-size:12px}
+#t{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--tx);color:var(--bg);padding:10px 16px;border-radius:10px;opacity:0;transition:.2s;pointer-events:none;z-index:9}
+#t.on{opacity:1}
+</style></head><body>
+<nav id="nav"></nav><main id="v"><p style="padding:12px">Lade Logbuch …</p></main><div id="t"></div>
+<script>
+window.onerror=function(m,s,l){var e=document.createElement('div');e.style.cssText='margin:12px;padding:12px;border:2px solid #c23b3b;border-radius:8px;font:14px sans-serif';e.textContent='Fehler: '+m+' (Zeile '+l+')';document.body.insertBefore(e,document.body.firstChild)};
+</script>
+<script>
+const DG=[['Innere/Kardiologie',['ACS/Brustschmerz','Rhythmusstörung','Hypertensive Krise','Lungenembolie','Dyspnoe/Asthma/COPD','Lungenödem','Sepsis','Hypo-/Hyperglykämie','Synkope','Akutes Abdomen/GI-Blutung']],['Neurologie',['Schlaganfall','Krampfanfall','Bewusstseinsstörung','Schwindel/Kopfschmerz']],['Chirurgie/Trauma',['Trauma','Sturz','Verbrennung/Verbrühung','Verätzung','Augenverletzung','Schnitt-/Quetschverletzung','Blutung']],['Pädiatrie',['Fieberkrampf','Kindl. Atemnot','Kindl. Notfall sonstig.']],['Gynäkologie/Geburtshilfe',['Geburt','Blutung Schwangerschaft','Eklampsie/Präeklampsie']],['Psychiatrie',['Psychiatrischer Notfall']],['Toxikologie/Umwelt',['Intoxikation','Inhalationstrauma/Reizgas','Anaphylaxie','Hitzeerkrankung','Unterkühlung','Strom-/Blitzunfall']],['Reanimation/Sonstige',['Reanimation','Sonstiges']]];
+const RD_DIAG=DG.flatMap(g=>g[1]),FB={};DG.forEach(g=>g[1].forEach(n=>FB[n]=g[0]));
+const RD_ART=['Notfall RTW','NEF/Notarzt','Betriebsunfall','Krankentransport','Verlegung','Sonstiges'];
+const RD_M=['i.v.-Zugang','i.o.-Zugang','12-Kanal-EKG','Beutelbeatmung','Intubation','Supraglott. Atemweg','Medikamentengabe','Defibrillation','Thoraxkompression','Blutzucker','Immobilisation','CPAP','Verneblung','Dekontamination','Augenspülung'];
+const KL_BER=['Anästhesie/OP','Aufwachraum','ITS','Notaufnahme','Sonstiges'];
+const KL_M=['PVK','Blutentnahme','Arterielle Kanüle','ZVK','Maskenbeatmung','Larynxmaske','Intubation','Videolaryngoskopie','Spinalanästhesie','Periduralkatheter','Plexusblock','Einleitung','Ausleitung','Magensonde','Blasenkatheter','Sono: Intensiv/Notfall (Fokus)','Sono: Anästhesie (Gefäß/Nerv)','Sono: Kardiologie (Echo)','Sono: Innere/Abdomen','Sono: Lunge/Thorax','Sono: Gynäkologie','Sono: Geburtshilfe','Sono: Pädiatrie','Sono: Urologie/Niere','Sono: Gefäße/Duplex','Sono: Schilddrüse/Hals','Sono: Muskuloskelettal'];
+const LM={rd:RD_M,kl:KL_M};
+const BY={rd:['selbst','Team','Notarzt'],kl:['selbst','unter Aufsicht','assistiert','beobachtet']};
+const SH=['Tag','Nacht'],YN=['ja','nein'];
+const DET={
+Reanimation:[['lai','Laienreanimation',YN],['zeu','Kollaps beobachtet',YN],['rhy','Initialer Rhythmus',['Kammerflimmern/pVT','Asystolie','PEA']],['aw','Atemweg',['Beutel','Supraglott.','Intubation']],['mec','Mechanische CPR',YN],['out','Ausgang',['ROSC bei Übergabe','Transport unter CPR','Abbruch vor Ort']],['sch','Anzahl Schocks','#'],['adr','Adrenalin-Gaben','#'],['dur','Dauer (min)','#']],
+Trauma:[['mech','Mechanismus',['Verkehrsunfall','Sturz','Gewalt','Sport','Sonstiges']],['reg','Verletzte Regionen',['Kopf','HWS/Wirbelsäule','Thorax','Abdomen','Becken','Obere Extr.','Untere Extr.'],1],['inst','Hämodyn. instabil',YN],['ziel','Zielklinik',['Traumazentrum','Andere Klinik']],['gcs','GCS','#']],
+Betriebsunfall:[['gef','Gefahrstoff',['Säure','Lauge','Lösungsmittel','Reizgas/Dämpfe','Druckgas','Heiße Medien/Dampf','Sonstiger/unbekannt']],['weg','Expositionsweg',['Haut','Auge','Inhalativ','Oral'],1],['vart','Verletzungsart',['Verätzung','Verbrennung/Verbrühung','Inhalationstrauma','Quetschung/Maschine','Sturz/Absturz','Schnitt/Stich','Sonstige']],['dek','Dekontamination erfolgt',YN],['giz','Giftinformationszentrale kontaktiert',YN]]};
+const ALLF=Object.values(DET).flat(),lbl=k=>(ALLF.find(a=>a[0]===k)||[])[1]||k;
+const K2='logbuch_v2',K3='logbuch_meta';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const iso=(d=new Date())=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const fmt=s=>s.split('-').reverse().join('.');
+const opt=(l,v)=>l.map(s=>`<option ${s===v?'selected':''}>${s}</option>`).join('');
+function mig(a){const o=[];(Array.isArray(a)?a:[]).forEach(e=>{if(e&&e.type==='rd'&&e.diag&&typeof e.diag==='object'){const sh=e.shift==='Nacht'?'Nacht':'Tag';let l=[];Object.entries(e.diag).forEach(([k,v])=>{for(let i=0;i<v;i++)l.push(k)});while(l.length<(e.n||0))l.push('');if(!l.length)l.push('');l.forEach((g,i)=>o.push({id:e.id+'-'+i,type:'rd',date:e.date,shift:sh,art:'',diag:g,ms:i?[]:e.ms||[],x:{},note:i?'':e.note||''}))}else if(e&&e.id&&e.date&&Array.isArray(e.ms))o.push(e)});return o}
+let db=[],meta={};
+try{db=mig(JSON.parse(localStorage.getItem(K2)||localStorage.getItem('logbuch_v1')||'[]'))}catch(e){}
+try{meta=JSON.parse(localStorage.getItem(K3))||{}}catch(e){}
+const save=()=>{try{localStorage.setItem(K2,JSON.stringify(db));localStorage.setItem(K3,JSON.stringify(meta))}catch(e){toast('Browser-Speicher nicht verfügbar – bitte exportieren')}};
+const blank=t=>t==='kl'?{type:'kl',date:iso(),bereich:KL_BER[0],ms:[],note:''}:{type:t,date:iso(),shift:'Tag',art:'',diag:'',ms:[],x:{},note:''};
+let tab='erfassen',mode='rd',D={rd:blank('rd'),kl:blank('kl')},editId=null,arm=null,snooze=0,sf={ctx:'all',per:'all'},io='';
+const d=()=>D[mode];
+function toast(m){const t=document.getElementById('t');t.textContent=m;t.className='on';setTimeout(()=>t.className='',2200)}
+function go(x){tab=x;arm=null;render()}
+function setMode(m){if(editId)return;mode=m;render()}
+function pick(k,i){const v=(k==='art'?RD_ART:RD_DIAG)[i];d()[k]=d()[k]===v?'':v;render()}
+function tgx(k,i){const v=ALLF.find(a=>a[0]===k)[2][i],a=d().x[k]||(d().x[k]=[]),j=a.indexOf(v);j<0?a.push(v):a.splice(j,1);render()}
+function addM(i){d().ms.push({m:LM[mode][i],by:'selbst',t:1,ok:true});render()}
+function addC(){const v=document.getElementById('cm').value.trim();if(!v)return;d().ms.push({m:v,by:'selbst',t:1,ok:true});render()}
+function delM(i){d().ms.splice(i,1);render()}
+function tr(i,x){const r=d().ms[i];r.t=Math.max(1,r.t+x);render()}
+function tg(i){const r=d().ms[i];r.ok=!r.ok;render()}
+function dk(){return mode==='rd'?[d().art,d().diag]:[]}
+function saveEntry(){
+  const e=JSON.parse(JSON.stringify(d()));
+  if(e.type!=='kl'){const ks=new Set(dk().filter(k=>DET[k]).flatMap(k=>DET[k].map(a=>a[0])));e.x=Object.fromEntries(Object.entries(e.x||{}).filter(([k])=>ks.has(k)))}
+  if(e.type==='rd'&&!e.art&&!e.diag&&!e.ms.length)return toast('Bitte Art, Diagnose oder Maßnahme erfassen');
+  if(e.type==='kl'&&!e.ms.length)return toast('Bitte mindestens eine Maßnahme');
+  if(editId){e.id=editId;db=db.map(x=>x.id===editId?e:x)}else{e.id=Date.now().toString(36)+Math.random().toString(36).slice(2,5);db.push(e)}
+  save();const k=db.filter(x=>x.type==='rd'&&x.date===e.date&&x.shift===e.shift).length;
+  const b=blank(mode);b.date=e.date;if(e.type==='kl')b.bereich=e.bereich;else b.shift=e.shift;D[mode]=b;
+  toast('Gespeichert'+(e.type==='rd'?' · Einsatz '+k+' dieser Schicht':''));editId=null;render();scrollTo(0,0)}
+function edit(id){const e=db.find(x=>x.id===id);if(!e)return;mode=e.type;D[mode]=JSON.parse(JSON.stringify(e));if(!D[mode].x&&e.type!=='kl')D[mode].x={};editId=id;tab='erfassen';render();scrollTo(0,0)}
+function cancelEdit(){D[mode]=blank(mode);editId=null;render()}
+function del(id){if(arm!==id){arm=id;render();return}db=db.filter(x=>x.id!==id);arm=null;save();render()}
+const chip=(l,on,js)=>`<span class="chip ${on?'on':''}" onclick="${js}">${esc(l)}</span>`;
+function vDet(){const x=d().x;return dk().filter(k=>DET[k]).map(k=>{const f=DET[k],ns=f.filter(a=>a[2]==='#');
+  return `<div class="card"><h2>Details: ${esc(k)}</h2>`+f.filter(a=>a[2]!=='#').map(([c,l,o,m])=>m?`<label>${l}</label><div class="chips">${o.map((v,i)=>chip(v,(x[c]||[]).includes(v),`tgx('${c}',${i})`)).join('')}</div>`:`<label>${l}</label><select onchange="d().x['${c}']=this.value"><option value="">–</option>${opt(o,x[c])}</select>`).join('')+(ns.length?`<div class="g">${ns.map(([c,l])=>`<div><label>${l}</label><input type="number" inputmode="numeric" min="0" value="${esc(x[c]??'')}" oninput="d().x['${c}']=this.value"></div>`).join('')}</div>`:'')+'</div>'}).join('')}
+function vErfassen(){
+  const x=d(),kl=mode==='kl',L=LM[mode];
+  let h=`<div class="seg">${[['rd','Rettungsdienst'],['kl','Klinik']].map(([k,l])=>`<button class="${mode===k?'on':''}" onclick="setMode('${k}')">${l}</button>`).join('')}</div>`;
+  if(editId)h+=`<p class="mu">Eintrag wird bearbeitet. <a href="#" onclick="cancelEdit();return false">Abbrechen</a></p>`;
+  h+=`<div class="card"><div class="g"><div><label>Datum</label><input type="date" value="${x.date}" oninput="d().date=this.value"></div>`+(kl?`<div><label>Bereich</label><select onchange="d().bereich=this.value">${opt(KL_BER,x.bereich)}</select></div>`:`<div><label>Schicht</label><select onchange="d().shift=this.value">${opt(SH,x.shift)}</select></div>`)+'</div></div>';
+  if(mode==='rd'){let i=0;h+=`<div class="card"><h2>Art des Einsatzes</h2><div class="chips">${RD_ART.map((n,j)=>chip(n,x.art===n,`pick('art',${j})`)).join('')}</div></div>
+  <div class="card"><h2>Verdachtsdiagnose</h2>${DG.map(([g,l])=>`<div class="mu" style="margin:8px 0 4px">${g}</div><div class="chips">${l.map(n=>chip(n,x.diag===n,`pick('diag',${i++})`)).join('')}</div>`).join('')}</div>`}
+  h+=vDet();
+  const ch=f=>L.map((n,i)=>f(n)?`<span class="chip" onclick="addM(${i})">+ ${esc(n)}</span>`:'').join('');
+  h+=`<div class="card"><h2>Maßnahmen</h2><div class="chips">${ch(n=>n.slice(0,4)!=='Sono')}</div>`+(kl?`<label>Sonografie nach Fachgebiet</label><div class="chips">${ch(n=>n.slice(0,4)==='Sono')}</div>`:'')+`<div class="add"><input id="cm" placeholder="Eigene Maßnahme"><button class="btn s" onclick="addC()">+</button></div>`;
+  h+=x.ms.map((r,i)=>`<div class="row"><div class="rn"><span>${esc(r.m)}</span><button class="x" onclick="delM(${i})">✕</button></div><div class="rc"><select onchange="d().ms[${i}].by=this.value">${opt(BY[mode],r.by)}</select><span class="st"><button onclick="tr(${i},-1)">−</button><b>${r.t}</b><button onclick="tr(${i},1)">+</button>Vers.</span><button class="ok ${r.ok?'y':'n'}" onclick="tg(${i})">${r.ok?'✓ erfolgreich':'✗ erfolglos'}</button></div></div>`).join('')+'</div>';
+  h+=`<div class="card"><label>Notiz (ohne Patientendaten)</label><textarea rows="2" oninput="d().note=this.value">${esc(x.note)}</textarea></div><button class="btn" onclick="saveEntry()">${editId?'Änderung speichern':mode==='rd'?'Einsatz speichern':'Eintrag speichern'}</button>`;
+  return h}
+function vVerlauf(){
+  if(!db.length)return '<p class="mu">Noch keine Einträge.</p>';
+  return db.filter(e=>e.type!=='manv').sort((a,b)=>b.date.localeCompare(a.date)||b.id.localeCompare(a.id)).map(e=>{
+    const t={rd:'RD · '+e.shift,kl:'Klinik · '+e.bereich}[e.type];
+    const tgs=[e.art,e.diag].filter(Boolean).map(v=>`<span class="tag"><b>${esc(v)}</b></span>`).join('')+Object.entries(e.x||{}).filter(([k,v])=>v!==''&&!(Array.isArray(v)&&!v.length)).map(([k,v])=>`<span class="tag">${esc(lbl(k))}: ${esc([].concat(v).join(', '))}</span>`).join('');
+    return `<div class="card"><b>${fmt(e.date)}</b> · ${esc(t)}<div>${tgs}</div><div>${e.ms.map(m=>`<span class="tag">${esc(m.m)} · ${esc(m.by)} · ${m.t}× ${m.ok?'✓':'✗'}</span>`).join('')}</div>${e.note?`<p class="mu">${esc(e.note)}</p>`:''}<div class="g"><button class="btn s" onclick="edit('${e.id}')">Bearbeiten</button><button class="btn d" onclick="del('${e.id}')">${arm===e.id?'Wirklich löschen?':'Löschen'}</button></div></div>`}).join('')}
+function filt(){let from='';const t=new Date();if(sf.per==='30')from=iso(new Date(t-30*864e5));else if(sf.per==='yr')from=t.getFullYear()+'-01-01';return db.filter(e=>e.date>=from&&(sf.ctx==='all'||e.type===sf.ctx))}
+function bars(l){if(!l.length)return '<p class="mu">Keine Daten.</p>';const m=Math.max(...l.map(x=>x[1]));return l.map(([a,b])=>`<div class="bar"><span>${esc(a)}</span><i style="width:${Math.max(2,b/m*48)}%"></i><em>${b}</em></div>`).join('')}
+function topn(a,n=8){const o={};a.forEach(v=>{if(v)o[v]=(o[v]||0)+1});return Object.entries(o).sort((a,b)=>b[1]-a[1]).slice(0,n)}
+const xs=(e,k)=>(e.x&&e.x[k])||'';
+function vStats(){
+  const f=filt(),rd=f.filter(e=>e.type==='rd'),kl=f.filter(e=>e.type==='kl');
+  const M={};f.forEach(e=>e.ms.forEach(m=>{const o=M[m.m]||(M[m.m]={n:0,s:0,t:0,ok:0});o.n++;o.t+=m.t;if(m.by==='selbst')o.s++;if(m.ok)o.ok++}));
+  const ml=Object.entries(M).sort((a,b)=>b[1].n-a[1].n);
+  const mol=topn(rd.map(e=>e.date.slice(0,7)),99).sort().slice(-12).map(([k,v])=>[k.slice(5)+'/'+k.slice(2,4),v]);
+  const re=rd.filter(e=>e.diag==='Reanimation'),tq=rd.filter(e=>e.diag==='Trauma'),bu=rd.filter(e=>e.art==='Betriebsunfall'),ro=re.filter(e=>xs(e,'out')),ros=ro.filter(e=>e.x.out==='ROSC bei Übergabe').length;
+  const sono=ml.filter(([k])=>k.slice(0,4)==='Sono').map(([k,o])=>[k.slice(6),o.n]);
+  const sel=(k,o)=>`<select onchange="sf.${k}=this.value;render()">${o.map(([v,l])=>`<option value="${v}" ${sf[k]===v?'selected':''}>${l}</option>`).join('')}</select>`;
+  const card=(t,b)=>`<div class="card"><h2>${t}</h2>${b}</div>`;
+  return `<div class="g">${sel('ctx',[['all','Alle Bereiche'],['rd','Rettungsdienst'],['kl','Klinik']])}${sel('per',[['all','Gesamt'],['yr','Dieses Jahr'],['30','Letzte 30 Tage']])}</div>
+  <div class="kp" style="margin-top:10px"><div><b>${new Set(rd.map(e=>e.date+e.shift)).size}</b>RD-Schichten</div><div><b>${rd.length}</b>RD-Einsätze</div><div><b>${bu.length}</b>Betriebsunfälle</div><div><b>${kl.length}</b>Klinik-Einträge</div><div><b>${f.reduce((a,e)=>a+e.ms.length,0)}</b>Maßnahmen</div></div>
+  ${card('Maßnahmen',`<div class="tw"><table><tr><th>Maßnahme</th><th>Anz.</th><th>selbst</th><th>Ø Vers.</th><th>Erfolg</th></tr>${ml.map(([k,o])=>`<tr><td>${esc(k)}</td><td>${o.n}</td><td>${o.s}</td><td>${(o.t/o.n).toFixed(1)}</td><td>${Math.round(o.ok/o.n*100)}%</td></tr>`).join('')||'<tr><td>–</td></tr>'}</table></div>`)}
+  ${card('Sonografie nach Fachgebiet',bars(sono))}
+  ${card('Einsätze pro Monat (RD)',bars(mol))}
+  ${card('Fachbereiche (RD)',bars(topn(rd.map(e=>e.diag&&(FB[e.diag]||'Andere')))))}
+  ${card('Häufigste Verdachtsdiagnosen',bars(topn(rd.map(e=>e.diag))))}
+  ${card('Einsatzarten',bars(topn(rd.map(e=>e.art))))}
+  ${bu.length?card('Betriebsunfälle: Gefahrstoff',bars(topn(bu.map(e=>xs(e,'gef'))))+'<h2 style="margin-top:10px">Verletzungsart</h2>'+bars(topn(bu.map(e=>xs(e,'vart'))))):''}
+  ${re.length?card('Reanimationen',`<p>${re.length} erfasst${ro.length?` · ROSC bei Übergabe: ${ros}/${ro.length} (${Math.round(ros/ro.length*100)}%)`:''}</p>`+bars(topn(re.map(e=>xs(e,'rhy'))))):''}
+  ${tq.length?card('Trauma ('+tq.length+')',bars(topn(tq.map(e=>xs(e,'mech'))))+'<h2 style="margin-top:10px">Verletzte Regionen</h2>'+bars(topn(tq.flatMap(e=>xs(e,'reg')||[])))):''}`}
+function csv(){const S={rd:'Rettungsdienst',kl:'Klinik',manv:'MANV'},r=[['Datum','Setting','Schicht/Bereich','Art','Verdachtsdiagnose','Maßnahme','Durchgeführt von','Versuche','Erfolgreich']];db.filter(e=>e.type!=='manv').forEach(e=>{const b=[e.date,S[e.type],e.shift||e.bereich,e.art||'',e.diag||''];(e.ms.length?e.ms:[{m:'',by:'',t:'',ok:null}]).forEach(m=>r.push([...b,m.m,m.by,m.t,m.ok===null?'':m.ok?'ja':'nein']))});return r.map(x=>x.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(';')).join('\n')}
+function mk(kind){if(kind==='json'){io=JSON.stringify(db);meta={d:Date.now(),n:db.length};save()}else io=csv();render();const ta=document.getElementById('io');ta.select();try{navigator.clipboard.writeText(io).then(()=>toast('In Zwischenablage kopiert – jetzt sicher ablegen'),()=>toast('Text markiert – bitte manuell kopieren'))}catch(e){toast('Text markiert – bitte manuell kopieren')}}
+function imp(){try{const a=mig(JSON.parse(io)),ids=new Set(db.map(x=>x.id));let n=0;a.forEach(e=>{if(!ids.has(e.id)){db.push(e);n++}});save();toast(n+' Einträge importiert');render()}catch(e){toast('Import-Text ungültig')}}
+function wipe(){if(arm!=='all'){arm='all';render();return}db=[];arm=null;save();render()}
+function banner(){if(!db.length||snooze)return '';const days=meta.d?Math.floor((Date.now()-meta.d)/864e5):0,nw=db.length-(meta.n||0);
+  const why=!meta.d?(db.length>=3?'Es wurde noch kein Backup erstellt.':''):nw>=10?nw+' neue Einträge seit dem letzten Backup.':days>=7&&nw>0?'Letztes Backup vor '+days+' Tagen, '+nw+' neue Einträge.':'';
+  return why?`<div class="card" style="border-color:var(--ac)"><b>Backup fällig</b><div class="mu">${why}</div><div class="g"><button class="btn" onclick="go('daten');mk('json')">Jetzt sichern</button><button class="btn s" onclick="snooze=1;render()">Später</button></div></div>`:''}
+function vDaten(){return `<div class="card"><h2>Datensicherung</h2><p class="mu">${db.length} Einträge, gespeichert nur in diesem Browser auf diesem Gerät. Letztes Backup: ${meta.d?fmt(iso(new Date(meta.d))):'noch keins'}. Das Leeren der Browserdaten löscht alles – das JSON-Backup bitte z. B. in Notizen oder Dateien ablegen.</p>
+  <button class="btn" onclick="mk('json')">Backup erzeugen (JSON, kopieren)</button><button class="btn s" onclick="mk('csv')">Maßnahmen als CSV (Excel/Sheets)</button>
+  <label>Text zum Sichern oder zum Importieren</label><textarea id="io" rows="6" oninput="io=this.value">${esc(io)}</textarea>
+  <button class="btn s" onclick="imp()">JSON-Backup importieren (ergänzt)</button></div>
+  <div class="card"><button class="btn d" onclick="wipe()">${arm==='all'?'Wirklich ALLES löschen?':'Alle Daten löschen'}</button></div>
+  <p class="mu">Tipp: Seite im Handy-Browser zum Startbildschirm hinzufügen. Keine Patientendaten erfassen.</p>`}
+function render(){
+  const T=[['erfassen','Erfassen'],['verlauf','Verlauf'],['stats','Statistik'],['daten','Daten']];
+  document.getElementById('nav').innerHTML=T.map(([k,l])=>`<button class="${tab===k?'on':''}" onclick="go('${k}')">${l}</button>`).join('');
+  document.getElementById('v').innerHTML=banner()+{erfassen:vErfassen,verlauf:vVerlauf,stats:vStats,daten:vDaten}[tab]()}
+render();
+</script></body></html>
